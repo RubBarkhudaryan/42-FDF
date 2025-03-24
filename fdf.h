@@ -15,21 +15,19 @@
 # define FDF_H
 # define ESC_KEY 65307
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <math.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <math.h>
+# include "./mlx/mlx.h"
+# include "./includes/gnl/get_next_line.h"
 
-#include "./mlx/mlx.h"
-#include "./includes/gnl/get_next_line.h"
-// #include "./includes/libft/libft.h"
+//file operationing functions
+int		file_length(int fd);
+int		is_valid_file(const char *str);
 
-typedef struct s_vars {
-	void	*mlx;
-	void	*win;
-}	t_vars;
+//fdf libft functions
+int		ft_strcmp(const char *str1, const char *str2);
+char	**ft_split(const char *str);
 
-int	close_window(t_vars *vars);
-int	handle_key(int keycode, t_vars *vars);
-
-#endif 
+#endif

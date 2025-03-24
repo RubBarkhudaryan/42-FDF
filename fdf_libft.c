@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   fdf_libft.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 15:10:10 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/03/24 15:10:10 by rbarkhud         ###   ########.fr       */
+/*   Created: 2025/03/24 23:58:20 by rbarkhud          #+#    #+#             */
+/*   Updated: 2025/03/24 23:58:20 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
 
-int	main(int argc, char *argv[])
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	if (argc == 2)
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str1[i] || str2[j])
 	{
-		int fd = open(argv[1], O_RDONLY);
-		char *str;
-		while ((str = get_next_line(fd)))
-		{
-			printf("%s", str);
-			free(str);
-		}
+		if (str1[i] != str2[j])
+			return (str1[i] - str2[j]);
+		++i;
+		++j;
 	}
-	else
-		printf("Arguments count is wrong");
-	return 0;
+	return (0);
 }
