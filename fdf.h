@@ -18,10 +18,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
+#include <math.h>
 
 #include "./mlx/mlx.h"
 #include "./includes/gnl/get_next_line.h"
-// #include "./includes/libft"
+// #include "./includes/libft/libft.h"
 
 typedef struct s_vars {
 	void	*mlx;

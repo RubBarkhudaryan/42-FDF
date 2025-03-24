@@ -7,7 +7,7 @@ SRCS	=	get_next_line.c get_next_line_utils.c
 
 OBJS	=	$(SRCS:%.c=%.o)
 
-RM		= rm -f
+RM		= rm -rf
 
 all: $(NAME) clean
 
