@@ -27,7 +27,9 @@ int		file_length(int fd);
 int		is_valid_file(const char *str);
 
 //fdf libft functions
-int		ft_strcmp(const char *str1, const char *str2);
 char	**ft_split(const char *str);
+int		ft_strcmp(const char *str1, const char *str2);
+int		ft_isdigit(int c);
+int		ft_atoi(const char *str);
 
 #endif

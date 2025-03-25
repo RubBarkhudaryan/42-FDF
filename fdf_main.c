@@ -22,10 +22,10 @@ int	main(int argc, char *argv[])
 		{
 			fd = open(argv[1], O_RDONLY);
 			if (!fd)
-				printf("Failed to open the file.");
+				perror("Failed to open the file.");
 		}
 	}
 	else
-		printf("Wrong arguments count.");
+		perror("Wrong arguments count.");
 	return (0);
 }
