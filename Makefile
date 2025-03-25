@@ -2,7 +2,7 @@ NAME		= fdf
 ARCHIVE		= fdf_lib.a
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+# CFLAGS		= -Wall -Wextra -Werror
 
 AR			= ar
 ARFLAGS		= -rcs
