@@ -34,7 +34,7 @@ int	ft_isdigit(int c)
 	return (c >= '0' && c <= '9');
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi(char *str)
 {
 	int	res;
 	int	sign;
@@ -53,33 +53,4 @@ int	ft_atoi(const char *str)
 		++str;
 	}
 	return (res * sign);
-}
-
-static int	safe_malloc(int **res, )
-{
-
-}
-
-int	**generate_matrix(int fd)
-{
-	int		i;
-	int		j;
-	int		**matrix;
-	int		rows_count;
-	char	**map_line;
-
-	i = 0;
-	j = 0;
-	rows_count = file_length(fd);
-	matrix = (int **)malloc(sizeof(int *) * rows_count);
-	if (!matrix)
-	{
-		perror("Map memory allocation failed.");
-		return (NULL);
-	}
-	map_line = ft_split(get_next_line(fd));
-	while (map_line[i])
-	{
-		
-	}
 }

@@ -9,7 +9,7 @@ ARFLAGS		= -rcs
 
 MLXFLAGS	= -Lmlx -lmlx -lX11 -lXext -lm
 
-SRCS		= fdf_mlx_utils.c fdf_map_validator.c fdf_libft.c ft_split.c
+SRCS		= fdf_utils.c fdf_map_validator.c fdf_libft.c ft_split.c
 OBJS		= $(SRCS:%.c=%.o)
 
 RM			= rm -rf
@@ -23,7 +23,7 @@ $(ARCHIVE) : $(OBJS)
 	$(AR) $(ARFLAGS) $(ARCHIVE) $(OBJS)
 
 $(NAME):
-	$(CC) $(CFLAGS) fdf_main.c $(ARCHIVE) $(MLXFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) parser.c $(ARCHIVE) $(MLXFLAGS) -o $(NAME)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
