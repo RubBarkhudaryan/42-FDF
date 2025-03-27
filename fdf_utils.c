@@ -23,19 +23,32 @@ void	free_matrix(int **matrix, int target_ind)
 	free(matrix);
 }
 
-
-
-int	matrix_len(char **str)
+void	free_split(char **split)
 {
 	int	i;
 
+	if (!split)
+		return;
 	i = 0;
-	while (ft_strcmp(*str, "") != 0)
+	while (split[i])
 	{
-		i++;
+		free(split[i]);
+		++i;
+	}
+	free(split);
+}
+
+int	matrix_len(char **str)
+{
+	int i;
+
+	i = 0;
+	while (*str)
+	{
+		++i;
 		++str;
 	}
-	return (i);
+	return (0);
 }
 
 void	throw_error(int error_status)

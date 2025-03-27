@@ -2,25 +2,35 @@ NAME		= fdf
 ARCHIVE		= fdf_lib.a
 
 CC			= cc
-# CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 
 AR			= ar
 ARFLAGS		= -rcs
 
 MLXFLAGS	= -Lmlx -lmlx -lX11 -lXext -lm
 
-SRCS		= fdf_utils.c fdf_map_validator.c fdf_libft.c ft_split.c
+SRCS		= fdf_utils.c fdf_map_validator.c
 OBJS		= $(SRCS:%.c=%.o)
 
 RM			= rm -rf
 
-all :  $(ARCHIVE) $(NAME)
+all : $(ARCHIVE) $(NAME)
 
 $(ARCHIVE) : $(OBJS)
 	make -C ./includes/gnl
-	cp ./includes/gnl/gnl.a $(ARCHIVE)
+	make -C ./includes/libft
+
+	$(AR) x ./includes/gnl/gnl.a
+	$(AR) x ./includes/libft/libft.a
+
+	$(AR) $(ARFLAGS) $(ARCHIVE) $(OBJS) get_next_line.o get_next_line_utils.o \
+	ft_isdigit.o ft_strlcpy.o ft_strcmp.o ft_atoi.o ft_split.o
+
+	rm -f get_next_line.o get_next_line_utils.o \
+	ft_isdigit.o ft_strlcpy.o ft_strcmp.o ft_atoi.o ft_split.o
+
 	make -C ./includes/gnl clean
-	$(AR) $(ARFLAGS) $(ARCHIVE) $(OBJS)
+	make -C ./includes/libft clean
 
 $(NAME):
 	$(CC) $(CFLAGS) parser.c $(ARCHIVE) $(MLXFLAGS) -o $(NAME)
