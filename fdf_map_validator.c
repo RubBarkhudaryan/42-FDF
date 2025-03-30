@@ -12,12 +12,16 @@
 
 #include "./fdf.h"
 
-int	file_length(int fd)
+int	file_length(char *file_path)
 {
+	int		fd;
 	int		len;
 	char	*str;
 
 	len = 0;
+	fd = open(file_path, O_RDONLY);
+	if (fd == -1)
+		return 0;
 	str = get_next_line(fd);
 	while (str)
 	{
@@ -25,10 +29,11 @@ int	file_length(int fd)
 		free(str);
 		str = get_next_line(fd);
 	}
+	close(fd);
 	return (len);
 }
 
-int	is_valid_file(const char *str)
+int	is_valid_file(char *str)
 {
 	int	fd;
 
@@ -38,7 +43,7 @@ int	is_valid_file(const char *str)
 	fd = open(str, O_RDONLY);
 	if (!fd)
 		return (0);
-	if (file_length(fd) > 0)
+	if (file_length(str) > 0)
 		return (1);
 	return (0);
 }

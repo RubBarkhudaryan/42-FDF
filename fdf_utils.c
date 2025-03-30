@@ -42,13 +42,12 @@ int	matrix_len(char **str)
 {
 	int i;
 
+	if (!str)
+		return (0);
 	i = 0;
-	while (*str)
-	{
-		++i;
-		++str;
-	}
-	return (0);
+	while (str[i] && ft_strcmp(str[i], "") != 0)
+		i++;
+	return (i - 1);
 }
 
 void	throw_error(int error_status)

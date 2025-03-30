@@ -9,7 +9,7 @@ ARFLAGS		= -rcs
 
 MLXFLAGS	= -Lmlx -lmlx -lX11 -lXext -lm
 
-SRCS		= fdf_utils.c fdf_map_validator.c
+SRCS		= parser.c fdf_utils.c fdf_map_validator.c
 OBJS		= $(SRCS:%.c=%.o)
 
 RM			= rm -rf
@@ -33,7 +33,7 @@ $(ARCHIVE) : $(OBJS)
 	make -C ./includes/libft clean
 
 $(NAME):
-	$(CC) $(CFLAGS) parser.c $(ARCHIVE) $(MLXFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) fdf_main.c $(ARCHIVE) $(MLXFLAGS) -o $(NAME)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@

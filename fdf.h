@@ -30,10 +30,17 @@ typedef struct fdf_
 	int	**matrix;
 } fdf;
 
+typedef struct line_
+{
+	char	*str;
+	char	**split;
+} line;
 
 //file operationing functions
-int		file_length(int fd);
-int		is_valid_file(const char *str);
+int		file_length(char *file_path);
+int		is_valid_file(char *str);
+fdf		parse_map(char *file_path);
+
 
 
 //fdf utlis
