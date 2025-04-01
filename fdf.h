@@ -13,7 +13,6 @@
 #ifndef FDF_H
 
 # define FDF_H
-# define ESC_KEY 65307
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -43,6 +42,13 @@ typedef struct line
 	char	**split;
 }	t_line;
 
+typedef struct point
+{
+	int	x;
+	int	y;
+	int	color;
+}	t_point;
+
 /* file manipulating functions */
 int		file_length(char *file_path);
 int		is_valid_file(char *str);
@@ -50,12 +56,12 @@ t_fdf	*parse_map(char *file_path);
 
 /* parser helper functions */
 void	free_matrix(int ***matrix, int target_ind);
-void	free_split(char **split);
+void	free_split(char ***split);
 int		row_len(char **split);
 void	throw_error(int error_status);
 
 /* drawing functions */
-void	draw_line(float x, float y, float x1, float y1, t_fdf *data);
+void	draw_line(t_point pt1, t_point pt2, t_fdf *data);
 void	draw(t_fdf *data);
 
 #endif

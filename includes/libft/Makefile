@@ -3,7 +3,7 @@ CC				= cc
 CFLAGS			= -Wall -Wextra -Werror
 AR				= ar
 ARFLAGS			= -rcs
-SRCS			= ft_isdigit.c ft_strlcpy.c ft_strcmp.c ft_atoi.c ft_split.c
+SRCS			= ft_isdigit.c ft_strlcpy.c ft_strcmp.c ft_atoi.c ft_split.c ft_calloc.c
 
 OBJS			= $(SRCS:%.c=%.o)
 

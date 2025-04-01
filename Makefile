@@ -2,7 +2,7 @@ NAME		= fdf
 ARCHIVE		= fdf_lib.a
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g3
 
 AR			= ar
 ARFLAGS		= -rcs
@@ -24,10 +24,10 @@ $(ARCHIVE) : $(OBJS)
 	$(AR) x ./includes/libft/libft.a
 
 	$(AR) $(ARFLAGS) $(ARCHIVE) $(OBJS) get_next_line.o get_next_line_utils.o \
-	ft_isdigit.o ft_strlcpy.o ft_strcmp.o ft_atoi.o ft_split.o
+	ft_isdigit.o ft_strlcpy.o ft_strcmp.o ft_atoi.o ft_split.o ft_calloc.o
 
 	rm -f get_next_line.o get_next_line_utils.o \
-	ft_isdigit.o ft_strlcpy.o ft_strcmp.o ft_atoi.o ft_split.o
+	ft_isdigit.o ft_strlcpy.o ft_strcmp.o ft_atoi.o ft_split.o ft_calloc.o
 
 	make -C ./includes/gnl clean
 	make -C ./includes/libft clean

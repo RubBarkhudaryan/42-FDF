@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 16:57:27 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/01 17:51:56 by rbarkhud         ###   ########.fr       */
+/*   Created: 2025/04/01 17:49:05 by rbarkhud          #+#    #+#             */
+/*   Updated: 2025/04/01 18:03:13 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
+#include "libft.h"
 
-# define LIBFT_H
+static void	*ft_memset(void *buff, int c, size_t len)
+{
+	unsigned char	*ptr;
 
-# include <stddef.h>
-# include <stdlib.h>
+	ptr = (unsigned char *) buff;
+	while (len--)
+		ptr[len] = (unsigned char) c;
+	return (buff);
+}
 
-int		ft_atoi(char *str);
-int		ft_isdigit(int c);
-char	**ft_split(char const *str, char c);
-int		ft_strcmp(const char *str1, const char *str2);
-size_t	ft_strlcpy(char *dest, const char *src, size_t dest_size);
-void	*ft_calloc(size_t count, size_t size);
+void	*ft_calloc(size_t count, size_t size)
+{
+	size_t	total_size;
+	void	*ptr;
 
-#endif
+	total_size = count * size;
+	ptr = malloc(total_size);
+	if (ptr)
+		ft_memset(ptr, 0, total_size);
+	return (ptr);
+}
