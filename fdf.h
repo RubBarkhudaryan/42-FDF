@@ -23,31 +23,39 @@
 # include "./includes/gnl/get_next_line.h"
 # include "./includes/libft/libft.h"
 
-typedef struct fdf_
+typedef struct fdf
 {
-	int	rows;
-	int	cols;
-	int	**matrix;
-} fdf;
+	int		rows;
+	int		cols;
+	int		zoom;
+	int		color;
+	int		shift_x;
+	int		shift_y;
+	int		**matrix;
 
-typedef struct line_
+	void	*mlx_ptr;
+	void	*win_ptr;
+}	t_fdf;
+
+typedef struct line
 {
 	char	*str;
 	char	**split;
-} line;
+}	t_line;
 
-//file operationing functions
+/* file manipulating functions */
 int		file_length(char *file_path);
 int		is_valid_file(char *str);
-fdf		parse_map(char *file_path);
+t_fdf	*parse_map(char *file_path);
 
-
-
-//fdf utlis
-void	free_matrix(int **matrix, int target_ind);
-void	throw_error(int error_status);
+/* parser helper functions */
+void	free_matrix(int ***matrix, int target_ind);
 void	free_split(char **split);
-int		matrix_len(char **str);
+int		row_len(char **split);
+void	throw_error(int error_status);
 
+/* drawing functions */
+void	draw_line(float x, float y, float x1, float y1, t_fdf *data);
+void	draw(t_fdf *data);
 
 #endif

@@ -21,13 +21,11 @@ int	file_length(char *file_path)
 	len = 0;
 	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
-		return 0;
-	str = get_next_line(fd);
-	while (str)
+		return (0);
+	while (get_next_line(fd, &str))
 	{
 		++len;
 		free(str);
-		str = get_next_line(fd);
 	}
 	close(fd);
 	return (len);

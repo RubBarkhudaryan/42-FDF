@@ -68,7 +68,7 @@ static char	*read_line(int fd, char **tmp)
 	return (*tmp);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, char **ln)
 {
 	char		*line;
 	static char	*tmp = NULL;
@@ -84,5 +84,6 @@ char	*get_next_line(int fd)
 	if (!tmp)
 		return (NULL);
 	parse_buff(&line, &tmp);
+	*ln = line;
 	return (line);
 }
