@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
+/*   By: rbarkhud <rbarkhud@student.42yerevan.am>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:12:38 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/02 20:23:33 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:49:34 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int	main(int argc, char *argv[])
 		data->mlx_ptr = mlx_init();
 		data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, argv[1]);
 		data->zoom = 20;
-		data->shift_x = WIDTH / 2;
-		data->shift_y = HEIGHT / 4;
 		draw(data);
 		mlx_hook(data->win_ptr, 2, 1L << 0, deal_key, data);
 		mlx_hook(data->win_ptr, 17, 1L << 0, close_window, data);
