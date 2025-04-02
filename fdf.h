@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2025/03/24 14:44:31 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/03/24 14:44:31 by rbarkhud         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/03 00:46:11 by rbarkhud          #+#    #+#             */
+/*   Updated: 2025/04/03 00:46:11 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +37,11 @@ typedef struct fdf
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	*img;
+
+	char	*img_data;
+	int		bpp;
+	int		size_line;
+	int		endian;
 }	t_fdf;
 
 typedef struct line
@@ -57,8 +59,8 @@ typedef struct point
 }	t_point;
 
 /* file manipulating functions */
-int	file_length(char *file_path);
-int	is_valid_file(char *str);
+int		file_length(char *file_path);
+int		is_valid_file(char *str);
 t_fdf	*parse_map(char *file_path);
 
 /* parser helper functions */

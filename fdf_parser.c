@@ -12,12 +12,11 @@
 
 #include "./fdf.h"
 
-
 static void	fill_row(int **row, char *str)
 {
-	char **split;
-	int len;
-	int i;
+	char	**split;
+	int		len;
+	int		i;
 
 	split = ft_split(str, ' ');
 	if (!split)
@@ -40,10 +39,10 @@ static void	fill_row(int **row, char *str)
 
 t_fdf	*parse_map(char *file_path)
 {
-	int fd;
-	int i;
-	t_fdf *data;
-	t_line ln;
+	int		fd;
+	int		i;
+	t_fdf	*data;
+	t_line	ln;
 
 	fd = open(file_path, O_RDONLY);
 	data = (t_fdf *)malloc(sizeof(t_fdf));
@@ -52,21 +51,17 @@ t_fdf	*parse_map(char *file_path)
 	data->rows = file_length(file_path);
 	data->matrix = (int **)ft_calloc(data->rows, sizeof(int *));
 	if (!data->matrix)
-		data->matrix = NULL;
+		return (NULL);
 	i = 0;
 	while (get_next_line(fd, &ln.str))
 	{
 		if (!ln.str)
-		{
-			free_matrix(&data->matrix, i);
-			return (NULL);
-		}
-		fill_row(&data->matrix[i], ln.str);
+			return (free_matrix(&data->matrix, i), NULL);
+		fill_row(&data->matrix[i++], ln.str);
 		ln.split = ft_split(ln.str, ' ');
 		data->cols = row_len(ln.split);
 		free(ln.str);
 		free_split(&ln.split);
-		++i;
 	}
 	return (close(fd), data);
 }
