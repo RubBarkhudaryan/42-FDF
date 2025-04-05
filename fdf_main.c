@@ -6,7 +6,7 @@
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:12:38 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/06 00:14:09 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/06 01:16:52 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ static int	close_window(t_fdf *data)
 static int	deal_key(int key, t_fdf *dt)
 {
 	if (key == 65362 || key == 119)
-		dt->shift_y += 10;
+		move(-10, -10, dt);
 	else if (key == 65364 || key == 115)
-		dt->shift_y -= 10;
+		move(10, 10, dt);
 	else if (key == 65361 || key == 97)
-		dt->shift_x += 10;
+		move(-10, 10, dt);
 	else if (key == 65363 || key == 100)
-		dt->shift_x -= 10;
+		move(10, -10, dt);
 	else if (key == 65307)
 		close_window(dt);
 	else if (key == 122 && dt->zoom < 100)

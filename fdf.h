@@ -89,6 +89,7 @@ int		row_len(char **split);
 void	throw_error(int error_status);
 
 /* drawing functions */
+void	move(int x, int y, t_fdf *data);
 void	draw_line(t_point *pt1, t_point *pt2, t_fdf *data);
 void	draw(t_fdf *data);
 void	slope_less_than_one(t_point *delta, t_point *st, t_fdf *dt, t_clr c);
