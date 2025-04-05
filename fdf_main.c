@@ -6,11 +6,22 @@
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:12:38 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/03 03:48:45 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/06 00:14:09 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
+
+static void	init_data(t_fdf *dt, char *file_path)
+{
+	dt->mlx_ptr = mlx_init();
+	dt->win_ptr = mlx_new_window(dt->mlx_ptr, WIDTH, HEIGHT, file_path);
+	dt->img = mlx_new_image(dt->mlx_ptr, WIDTH, HEIGHT);
+	dt->img_dt = mlx_get_data_addr(dt->img, &dt->bpp, &dt->sz_ln, &dt->endian);
+	dt->zoom = 10;
+	dt->shift_x = WIDTH / 2;
+	dt->shift_y = HEIGHT / 4;
+}
 
 static int	end_session(t_fdf *data)
 {
@@ -37,28 +48,28 @@ static int	close_window(t_fdf *data)
 	return (0);
 }
 
-static int	deal_key(int key, t_fdf *data)
+static int	deal_key(int key, t_fdf *dt)
 {
 	if (key == 65362 || key == 119)
-		data->shift_y += 10;
+		dt->shift_y += 10;
 	else if (key == 65364 || key == 115)
-		data->shift_y -= 10;
+		dt->shift_y -= 10;
 	else if (key == 65361 || key == 97)
-		data->shift_x += 10;
+		dt->shift_x += 10;
 	else if (key == 65363 || key == 100)
-		data->shift_x -= 10;
+		dt->shift_x -= 10;
 	else if (key == 65307)
-		close_window(data);
-	else if (key == 122 && data->zoom < 100)
-		data->zoom += 5;
-	else if (key == 120 && data->zoom > -100)
-		data->zoom -= 5;
+		close_window(dt);
+	else if (key == 122 && dt->zoom < 100)
+		dt->zoom += 1;
+	else if (key == 120 && dt->zoom > -100)
+		dt->zoom -= 1;
 	else
 		return (0);
-	mlx_destroy_image(data->mlx_ptr, data->img);
-	data->img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
-	data->img_data = mlx_get_data_addr(data->img, &data->bpp, &data->size_line, &data->endian);
-	draw(data);
+	mlx_destroy_image(dt->mlx_ptr, dt->img);
+	dt->img = mlx_new_image(dt->mlx_ptr, WIDTH, HEIGHT);
+	dt->img_dt = mlx_get_data_addr(dt->img, &dt->bpp, &dt->sz_ln, &dt->endian);
+	draw(dt);
 	return (0);
 }
 
@@ -72,15 +83,9 @@ int	main(int argc, char *argv[])
 		if (!data)
 		{
 			throw_error(-1);
-			return(EXIT_FAILURE);
+			return (EXIT_FAILURE);
 		}
-		data->mlx_ptr = mlx_init();
-		data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, argv[1]);
-		data->img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
-		data->img_data = mlx_get_data_addr(data->img, &data->bpp, &data->size_line, &data->endian);
-		data->zoom = 1;
-		data->shift_x = WIDTH / 2;
-		data->shift_y = HEIGHT / 4;
+		init_data(data, argv[1]);
 		draw(data);
 		mlx_hook(data->win_ptr, 2, 1L << 0, deal_key, data);
 		mlx_hook(data->win_ptr, 17, 1L << 0, close_window, data);

@@ -6,7 +6,7 @@
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 20:04:54 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/03 03:47:51 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/06 00:52:29 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,60 +23,54 @@ static void	isometric(int *x, int *y, int z)
 	*y = (tmp_x + tmp_y) * sin(0.523599) - z;
 }
 
-void	draw_line(t_point *pt1, t_point *pt2, t_fdf *data)
+static t_point	init_temp_ptr(t_point *src, t_fdf *dt)
 {
-	t_point	tmp1;
-	t_point	tmp2;
-	t_point	delta;
+	t_point	tmp;
 
-	tmp1 = *pt1;
-	tmp2 = *pt2;
-	tmp1.z = data->matrix[tmp1.y][tmp1.x] * data->zoom;
-	tmp2.z = data->matrix[tmp2.y][tmp2.x] * data->zoom;
-	tmp1.x *= data->zoom;
-	tmp1.y *= data->zoom;
-	tmp2.x *= data->zoom;
-	tmp2.y *= data->zoom;
-	tmp1.x += data->shift_x;
-	tmp1.y += data->shift_y;
-	tmp2.x += data->shift_x;
-	tmp2.y += data->shift_y;
-	isometric(&tmp1.x, &tmp1.y, tmp1.z);
-	isometric(&tmp2.x, &tmp2.y, tmp2.z);
-	delta.x = tmp2.x - tmp1.x;
-	delta.y = tmp2.y - tmp1.y;
-	if (abs(delta.x) > abs(delta.y))
-		slope_less_than_one(&delta, &tmp1, data);
-	else
-		slope_bigger_than_one(&delta, &tmp1, data);
+	tmp = *src;
+	tmp.z = dt->matrix[tmp.y][tmp.x] * dt->zoom;
+	tmp.x *= dt->zoom;
+	tmp.y *= dt->zoom;
+	tmp.x += dt->shift_x;
+	tmp.y += dt->shift_y;
+	isometric(&tmp.x, &tmp.y, tmp.z);
+	tmp.color = get_color(dt->matrix[src->y][src->x], dt->z_min, dt->z_max);
+	return (tmp);
 }
 
-void	draw(t_fdf *data)
+void	draw_line(t_point *pt1, t_point *pt2, t_fdf *dt)
+{
+	t_point	t1;
+	t_point	t2;
+	t_point	delta;
+
+	t1 = init_temp_ptr(pt1, dt);
+	t2 = init_temp_ptr(pt2, dt);
+	delta.y = t2.y - t1.y;
+	delta.x = t2.x - t1.x;
+	if (abs(delta.x) > abs(delta.y))
+		slope_less_than_one(&delta, &t1, dt, ((t_clr){t1.color, t2.color}));
+	else
+		slope_bigger_than_one(&delta, &t1, dt, ((t_clr){t1.color, t2.color}));
+}
+
+void	draw(t_fdf *dt)
 {
 	t_point	pt1;
-	t_point	pt2;
 
 	pt1.y = 0;
-	while (pt1.y < data->rows)
+	while (pt1.y < dt->rows)
 	{
 		pt1.x = 0;
-		while (pt1.x < data->cols)
+		while (pt1.x < dt->cols)
 		{
-			if (pt1.x < data->cols - 1)
-			{
-				pt2.x = pt1.x + 1;
-				pt2.y = pt1.y;
-				draw_line(&pt1, &pt2, data);
-			}
-			if (pt1.y < data->rows - 1)
-			{
-				pt2.x = pt1.x;
-				pt2.y = pt1.y + 1;
-				draw_line(&pt1, &pt2, data);
-			}
+			if (pt1.x < dt->cols - 1)
+				draw_line(&pt1, (&(t_point){pt1.x + 1, pt1.y, 0, 0}), dt);
+			if (pt1.y < dt->rows - 1)
+				draw_line(&pt1, (&(t_point){pt1.x, pt1.y + 1, 0, 0}), dt);
 			pt1.x++;
 		}
 		pt1.y++;
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img, 0, 0);
+	mlx_put_image_to_window(dt->mlx_ptr, dt->win_ptr, dt->img, 0, 0);
 }

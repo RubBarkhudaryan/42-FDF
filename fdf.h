@@ -13,21 +13,27 @@
 #ifndef FDF_H
 
 # define FDF_H
-# define WIDTH 1920
+# define WIDTH 1080
 # define HEIGHT 1080
+# define LOW_COLOR 0x0000FF
+# define HIGH_COLOR 0xFF0000
 
 # include "./includes/gnl/get_next_line.h"
 # include "./includes/libft/libft.h"
 # include "./mlx/mlx.h"
 # include <fcntl.h>
 # include <math.h>
-# include <stdio.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct fdf
 {
 	int		rows;
 	int		cols;
+
+	int		z_min;
+	int		z_max;
+
 	int		zoom;
 	int		shift_x;
 	int		shift_y;
@@ -38,9 +44,9 @@ typedef struct fdf
 	void	*win_ptr;
 	void	*img;
 
-	char	*img_data;
+	char	*img_dt;
 	int		bpp;
-	int		size_line;
+	int		sz_ln;
 	int		endian;
 }	t_fdf;
 
@@ -58,6 +64,19 @@ typedef struct point
 	int	color;
 }	t_point;
 
+typedef struct trgb
+{
+	int	t;
+	int	r;
+	int	g;
+	int	b;
+}	t_trgb;
+
+typedef struct colors
+{
+	int	start_color;
+	int	end_color;
+}	t_clr;
 /* file manipulating functions */
 int		file_length(char *file_path);
 int		is_valid_file(char *str);
@@ -72,7 +91,19 @@ void	throw_error(int error_status);
 /* drawing functions */
 void	draw_line(t_point *pt1, t_point *pt2, t_fdf *data);
 void	draw(t_fdf *data);
-void	slope_less_than_one(t_point *delta, t_point *a, t_fdf *data);
-void	slope_bigger_than_one(t_point *delta, t_point *a, t_fdf *data);
+void	slope_less_than_one(t_point *delta, t_point *st, t_fdf *dt, t_clr c);
+void	slope_bigger_than_one(t_point *delta, \
+	t_point *st, t_fdf *dt, t_clr c);
+
+/*gradient from color*/
+int		get_color(int z, int z_min, int z_max);
+int		interpolate_color(int s_color, int e_color, float fraction);
+
+/*color making functions*/
+int		create_color(t_trgb color);
+int		get_t(int color);
+int		get_r(int color);
+int		get_g(int color);
+int		get_b(int color);
 
 #endif
