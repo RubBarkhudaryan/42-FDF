@@ -39,9 +39,9 @@ int	is_valid_file(char *str)
 	ft_strcmp(str + (ft_strlen(str) - 4), ".fdf") == 0))
 		return (0);
 	fd = open(str, O_RDONLY);
-	if (!fd)
-		return (0);
+	if (fd < 0)
+		return (close(fd), 0);
 	if (file_length(str) > 0)
-		return (1);
-	return (0);
+		return (close(fd), 1);
+	return (close(fd), 0);
 }

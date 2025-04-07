@@ -48,6 +48,13 @@ typedef struct fdf
 	int		bpp;
 	int		sz_ln;
 	int		endian;
+
+	float	alpha;
+	float	theta;
+	float	gamma;
+
+	int		draw_isometric;
+	int		render;
 }	t_fdf;
 
 typedef struct line
@@ -77,6 +84,7 @@ typedef struct colors
 	int	start_color;
 	int	end_color;
 }	t_clr;
+
 /* file manipulating functions */
 int		file_length(char *file_path);
 int		is_valid_file(char *str);
@@ -88,10 +96,16 @@ void	free_split(char ***split);
 int		row_len(char **split);
 void	throw_error(int error_status);
 
+/*keyboard actions*/
+void	rotate_drawing(int key, t_fdf *data);
+void	zoom(int key, t_fdf *data);
+void	change_projection(int key, t_fdf *dt);
+void	update_colors(t_fdf *data);
+
 /* drawing functions */
 void	move(int x, int y, t_fdf *data);
 void	draw_line(t_point *pt1, t_point *pt2, t_fdf *data);
-void	draw(t_fdf *data);
+int		draw(t_fdf *data);
 void	slope_less_than_one(t_point *delta, t_point *st, t_fdf *dt, t_clr c);
 void	slope_bigger_than_one(t_point *delta, \
 	t_point *st, t_fdf *dt, t_clr c);
@@ -99,6 +113,8 @@ void	slope_bigger_than_one(t_point *delta, \
 /*gradient from color*/
 int		get_color(int z, int z_min, int z_max);
 int		interpolate_color(int s_color, int e_color, float fraction);
+double	pseudo_rand(void);
+int		pseudo_random_color(void);
 
 /*color making functions*/
 int		create_color(t_trgb color);
@@ -106,5 +122,12 @@ int		get_t(int color);
 int		get_r(int color);
 int		get_g(int color);
 int		get_b(int color);
+
+/*rotate drawing*/
+t_point	rotate_z(t_point *pt, double angle);
+t_point	rotate_y(t_point *pt, double angle);
+t_point	rotate_x(t_point *pt, double angle);
+void	rotate_point(t_point *point, t_fdf *data);
+
 
 #endif

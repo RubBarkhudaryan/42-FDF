@@ -24,15 +24,11 @@ static t_fdf	*malloc_fdf(void)
 	return (data);
 }
 
-static void	fill_row(int **row, char *str, int *max, int *min)
+static void	fill_row(int **row, char **split, int *max, int *min)
 {
-	char	**split;
 	int		len;
 	int		i;
 
-	split = ft_split(str, ' ');
-	if (!split)
-		return ;
 	len = row_len(split);
 	i = 0;
 	*row = (int *)ft_calloc(len, sizeof(int));
@@ -50,7 +46,6 @@ static void	fill_row(int **row, char *str, int *max, int *min)
 			*max = (*row)[i];
 		++i;
 	}
-	free_split(&split);
 }
 
 t_fdf	*parse_map(char *file_path)
@@ -73,9 +68,9 @@ t_fdf	*parse_map(char *file_path)
 	{
 		if (!ln.str)
 			return (free_matrix(&data->matrix, i), NULL);
-		fill_row(&data->matrix[i++], ln.str, &data->z_max, &data->z_min);
 		ln.split = ft_split(ln.str, ' ');
 		data->cols = row_len(ln.split);
+		fill_row(&data->matrix[i++], ln.split, &data->z_max, &data->z_min);
 		free(ln.str);
 		free_split(&ln.split);
 	}

@@ -9,7 +9,9 @@ ARFLAGS		= -rcs
 
 MLXFLAGS	= -Lmlx -lmlx -lX11 -lXext -lm
 
-SRCS		= fdf_parser.c fdf_utils.c fdf_map_validator.c fdf_draw.c fdf_draw_utils.c fdf_color.c fdf_gradient.c
+SRCS		=	fdf_parser.c fdf_utils.c fdf_map_validator.c fdf_draw.c \
+				fdf_draw_utils.c fdf_color.c fdf_gradient.c fdf_rotate.c \
+				fdf_keyboard.c
 OBJS		= $(SRCS:%.c=%.o)
 
 RM			= rm -rf

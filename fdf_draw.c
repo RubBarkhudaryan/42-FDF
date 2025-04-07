@@ -6,9 +6,11 @@
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 20:04:54 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/06 01:15:35 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:40:52 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "./fdf.h"
 
 #include "./fdf.h"
 
@@ -33,7 +35,9 @@ static t_point	init_temp_ptr(t_point *src, t_fdf *dt)
 	tmp.y *= dt->zoom;
 	tmp.x += dt->shift_x;
 	tmp.y += dt->shift_y;
-	isometric(&tmp.x, &tmp.y, tmp.z);
+	rotate_point(&tmp, dt);
+	if (dt->draw_isometric)
+		isometric(&tmp.x, &tmp.y, tmp.z);
 	tmp.color = get_color(dt->matrix[src->y][src->x], dt->z_min, dt->z_max);
 	return (tmp);
 }
@@ -42,6 +46,7 @@ void	move(int x, int y, t_fdf *data)
 {
 	data->shift_x += x;
 	data->shift_y += y;
+	
 }
 
 void	draw_line(t_point *pt1, t_point *pt2, t_fdf *dt)
@@ -60,10 +65,15 @@ void	draw_line(t_point *pt1, t_point *pt2, t_fdf *dt)
 		slope_bigger_than_one(&delta, &t1, dt, ((t_clr){t1.color, t2.color}));
 }
 
-void	draw(t_fdf *dt)
+int	draw(t_fdf *dt)
 {
 	t_point	pt1;
 
+	if (dt->render == 0)
+		return (0);
+	mlx_destroy_image(dt->mlx_ptr, dt->img);
+	dt->img = mlx_new_image(dt->mlx_ptr, WIDTH, HEIGHT);
+	dt->img_dt = mlx_get_data_addr(dt->img, &dt->bpp, &dt->sz_ln, &dt->endian);
 	pt1.y = 0;
 	while (pt1.y < dt->rows)
 	{
@@ -79,4 +89,5 @@ void	draw(t_fdf *dt)
 		pt1.y++;
 	}
 	mlx_put_image_to_window(dt->mlx_ptr, dt->win_ptr, dt->img, 0, 0);
+	return (dt->render = 0, 1);
 }

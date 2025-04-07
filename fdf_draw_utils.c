@@ -6,9 +6,11 @@
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 20:12:53 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/06 00:47:54 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/07 03:21:58 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "./fdf.h"
 
 #include "./fdf.h"
 

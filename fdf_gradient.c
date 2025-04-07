@@ -39,3 +39,19 @@ int	interpolate_color(int s_color, int e_color, float fraction)
 	b = interpolate(s_color & 0xFF, e_color & 0xFF, fraction);
 	return ((r << 16) | (g << 8) | b);
 }
+
+double	pseudo_rand(void)
+{
+	static double	seed;
+	double			r;
+
+	seed = 0.5;
+	seed = sin(seed) * 1000000;
+	r = seed - floor(seed);
+	return (r);
+}
+
+int	pseudo_random_color(void)
+{
+	return ((int)(pseudo_rand() * 0x1000000));
+}

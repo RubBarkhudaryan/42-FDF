@@ -6,11 +6,12 @@
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:12:38 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/06 01:16:52 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:33:48 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
+#include <X11/keysym.h>
 
 static void	init_data(t_fdf *dt, char *file_path)
 {
@@ -21,6 +22,11 @@ static void	init_data(t_fdf *dt, char *file_path)
 	dt->zoom = 10;
 	dt->shift_x = WIDTH / 2;
 	dt->shift_y = HEIGHT / 4;
+	dt->alpha = 0;
+	dt->theta = 0;
+	dt->gamma = 0;
+	dt->draw_isometric = 1;
+	dt->render = 1;
 }
 
 static int	end_session(t_fdf *data)
@@ -60,18 +66,24 @@ static int	deal_key(int key, t_fdf *dt)
 		move(10, -10, dt);
 	else if (key == 65307)
 		close_window(dt);
-	else if (key == 122 && dt->zoom < 100)
-		dt->zoom += 1;
-	else if (key == 120 && dt->zoom > -100)
-		dt->zoom -= 1;
-	else
-		return (0);
-	mlx_destroy_image(dt->mlx_ptr, dt->img);
-	dt->img = mlx_new_image(dt->mlx_ptr, WIDTH, HEIGHT);
-	dt->img_dt = mlx_get_data_addr(dt->img, &dt->bpp, &dt->sz_ln, &dt->endian);
-	draw(dt);
+	else if (key == 61 || key == 45 || key == 65451 || key == 65453)
+		zoom(key, dt);
+	else if (key >= 49 && key <= 51)
+		rotate_drawing(key, dt);
+	else if (key == 116 || key == 102 || key == 114 || key == 105)
+	{
+		dt->draw_isometric = 0;
+		change_projection(key, dt);
+	}
+	printf("%d\n", key);
+	dt->render = 1;
 	return (0);
 }
+
+	// else if (key == 103)
+	// 	update_colors(dt);
+	// else
+	// 	return (0);
 
 int	main(int argc, char *argv[])
 {
@@ -89,6 +101,7 @@ int	main(int argc, char *argv[])
 		draw(data);
 		mlx_hook(data->win_ptr, 2, 1L << 0, deal_key, data);
 		mlx_hook(data->win_ptr, 17, 1L << 0, close_window, data);
+		mlx_loop_hook(data->mlx_ptr, draw, data);
 		mlx_loop(data->mlx_ptr);
 	}
 	else
