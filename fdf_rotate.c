@@ -28,8 +28,8 @@ t_point	rotate_y(t_point *pt, double angle)
 	t_point	res;
 
 	res.x = pt->x * cos(angle) + pt->z * sin(angle);
-	res.z = pt->z * cos(angle) - pt->x * sin(angle);
 	res.y = pt->y;
+	res.z = pt->z * cos(angle) - pt->x * sin(angle);
 	res.color = pt->color;
 	return (res);
 }

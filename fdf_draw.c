@@ -6,11 +6,9 @@
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 20:04:54 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/07 15:40:52 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:56:42 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "./fdf.h"
 
 #include "./fdf.h"
 
@@ -38,7 +36,7 @@ static t_point	init_temp_ptr(t_point *src, t_fdf *dt)
 	rotate_point(&tmp, dt);
 	if (dt->draw_isometric)
 		isometric(&tmp.x, &tmp.y, tmp.z);
-	tmp.color = get_color(dt->matrix[src->y][src->x], dt->z_min, dt->z_max);
+	tmp.color = get_color(dt->matrix[src->y][src->x], dt->z_min, dt->z_max, dt);
 	return (tmp);
 }
 
@@ -46,7 +44,6 @@ void	move(int x, int y, t_fdf *data)
 {
 	data->shift_x += x;
 	data->shift_y += y;
-	
 }
 
 void	draw_line(t_point *pt1, t_point *pt2, t_fdf *dt)

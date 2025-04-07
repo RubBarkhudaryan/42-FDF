@@ -6,12 +6,11 @@
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:12:38 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/07 15:33:48 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:03:01 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./fdf.h"
-#include <X11/keysym.h>
 
 static void	init_data(t_fdf *dt, char *file_path)
 {
@@ -27,6 +26,9 @@ static void	init_data(t_fdf *dt, char *file_path)
 	dt->gamma = 0;
 	dt->draw_isometric = 1;
 	dt->render = 1;
+	dt->low_color = 0x0000FF;
+	dt->high_color = 0xFF0000;
+	dt->seed = 0.5;
 }
 
 static int	end_session(t_fdf *data)
@@ -75,15 +77,11 @@ static int	deal_key(int key, t_fdf *dt)
 		dt->draw_isometric = 0;
 		change_projection(key, dt);
 	}
-	printf("%d\n", key);
+	else if (key == 'c')
+		update_colors(dt);
 	dt->render = 1;
 	return (0);
 }
-
-	// else if (key == 103)
-	// 	update_colors(dt);
-	// else
-	// 	return (0);
 
 int	main(int argc, char *argv[])
 {

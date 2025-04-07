@@ -15,20 +15,11 @@
 void	rotate_drawing(int key, t_fdf *data)
 {
 	if (key == 49)
-	{
-		data->gamma += 0.5;
-
-	}
+		data->gamma += 0.2;
 	else if (key == 50)
-	{
-		data->theta += 0.5;
-		
-	}
+		data->theta += 0.2;
 	else if (key == 51)
-	{
-		data->alpha += 0.5;
-
-	}
+		data->alpha += 0.2;
 }
 
 void	zoom(int key, t_fdf *data)
@@ -49,15 +40,15 @@ void	change_projection(int key, t_fdf *dt)
 	}
 	else if (key == 102)
 	{
-		dt->alpha = 90;
-		dt->theta = 0;
+		dt->alpha = 89.55;
+		dt->theta = 122.5;
 		dt->gamma = 0;
 	}
 	else if (key == 114)
 	{
 		dt->alpha = 0;
-		dt->theta = -90;
-		dt->gamma = 90;
+		dt->theta = -89.54;
+		dt->gamma = 89.55;
 	}
 	else if (key == 105)
 	{
@@ -66,11 +57,11 @@ void	change_projection(int key, t_fdf *dt)
 		dt->theta = 0;
 		dt->gamma = 0;
 	}
-
 }
 
-// void update_colors(t_fdf *data)
-// {
-// 	data->low_color = pseudo_random_color();
-// 	data->high_color = pseudo_random_color();
-// }
+void	update_colors(t_fdf *data)
+{
+	data->low_color = pseudo_random_color(data->seed);
+	data->seed += 0.5;
+	data->high_color = pseudo_random_color(data->seed);
+}

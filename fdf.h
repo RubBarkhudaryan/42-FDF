@@ -37,7 +37,6 @@ typedef struct fdf
 	int		zoom;
 	int		shift_x;
 	int		shift_y;
-	int		**color;
 	int		**matrix;
 
 	void	*mlx_ptr;
@@ -55,6 +54,10 @@ typedef struct fdf
 
 	int		draw_isometric;
 	int		render;
+
+	int		low_color;
+	int		high_color;
+	float	seed;
 }	t_fdf;
 
 typedef struct line
@@ -111,10 +114,10 @@ void	slope_bigger_than_one(t_point *delta, \
 	t_point *st, t_fdf *dt, t_clr c);
 
 /*gradient from color*/
-int		get_color(int z, int z_min, int z_max);
+int		get_color(int z, int z_min, int z_max, t_fdf *dt);
 int		interpolate_color(int s_color, int e_color, float fraction);
-double	pseudo_rand(void);
-int		pseudo_random_color(void);
+double	pseudo_rand(float seed);
+int		pseudo_random_color(float seed);
 
 /*color making functions*/
 int		create_color(t_trgb color);
@@ -128,6 +131,5 @@ t_point	rotate_z(t_point *pt, double angle);
 t_point	rotate_y(t_point *pt, double angle);
 t_point	rotate_x(t_point *pt, double angle);
 void	rotate_point(t_point *point, t_fdf *data);
-
 
 #endif

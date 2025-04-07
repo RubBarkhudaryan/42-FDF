@@ -17,7 +17,7 @@ static int	interpolate(int start, int end, float t)
 	return ((int)((1 - t) * start + t * end));
 }
 
-int	get_color(int z, int z_min, int z_max)
+int	get_color(int z, int z_min, int z_max, t_fdf *dt)
 {
 	float	frac;
 
@@ -25,7 +25,7 @@ int	get_color(int z, int z_min, int z_max)
 		frac = 0.0f;
 	else
 		frac = (float)(z - z_min) / (z_max - z_min);
-	return (interpolate_color(LOW_COLOR, HIGH_COLOR, frac));
+	return (interpolate_color(dt->low_color, dt->high_color, frac));
 }
 
 int	interpolate_color(int s_color, int e_color, float fraction)
@@ -40,18 +40,29 @@ int	interpolate_color(int s_color, int e_color, float fraction)
 	return ((r << 16) | (g << 8) | b);
 }
 
-double	pseudo_rand(void)
+double	pseudo_rand(float seed)
 {
-	static double	seed;
-	double			r;
+	double	r;
 
-	seed = 0.5;
 	seed = sin(seed) * 1000000;
 	r = seed - floor(seed);
 	return (r);
 }
 
-int	pseudo_random_color(void)
+int	pseudo_random_color(float seed)
 {
-	return ((int)(pseudo_rand() * 0x1000000));
+	int	r;
+	int	g;
+	int	b;
+
+	r = (int)(pseudo_rand(seed) * 256);
+	if (r < 64)
+		r += 64;
+	g = (int)(pseudo_rand(seed + 1) * 256);
+	if (g < 64)
+		g += 64;
+	b = (int)(pseudo_rand(seed + 2) * 256);
+	if (b < 64)
+		b += 64;
+	return (r << 16 | g << 8 | b);
 }
