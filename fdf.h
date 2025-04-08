@@ -15,8 +15,6 @@
 # define FDF_H
 # define WIDTH 1080
 # define HEIGHT 1080
-# define LOW_COLOR 0x0000FF
-# define HIGH_COLOR 0xFF0000
 
 # include "./includes/gnl/get_next_line.h"
 # include "./includes/libft/libft.h"
@@ -118,13 +116,6 @@ int		get_color(int z, int z_min, int z_max, t_fdf *dt);
 int		interpolate_color(int s_color, int e_color, float fraction);
 double	pseudo_rand(float seed);
 int		pseudo_random_color(float seed);
-
-/*color making functions*/
-int		create_color(t_trgb color);
-int		get_t(int color);
-int		get_r(int color);
-int		get_g(int color);
-int		get_b(int color);
 
 /*rotate drawing*/
 t_point	rotate_z(t_point *pt, double angle);

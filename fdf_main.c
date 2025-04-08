@@ -6,7 +6,7 @@
 /*   By: rbarkhud <rbarkhud@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:12:38 by rbarkhud          #+#    #+#             */
-/*   Updated: 2025/04/07 22:03:01 by rbarkhud         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:19:46 by rbarkhud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	main(int argc, char *argv[])
 {
 	t_fdf	*data;
 
-	if (argc == 2)
+	if (argc == 2 && is_valid_file(argv[1]))
 	{
 		data = parse_map(argv[1]);
 		if (!data)

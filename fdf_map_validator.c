@@ -36,7 +36,7 @@ int	is_valid_file(char *str)
 	int	fd;
 
 	if (!(ft_strlen(str) > 4 && \
-	ft_strcmp(str + (ft_strlen(str) - 4), ".fdf") == 0))
+		ft_strcmp(str + (ft_strlen(str) - 4), ".fdf") == 0))
 		return (0);
 	fd = open(str, O_RDONLY);
 	if (fd < 0)

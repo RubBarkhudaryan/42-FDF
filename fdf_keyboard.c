@@ -25,9 +25,19 @@ void	rotate_drawing(int key, t_fdf *data)
 void	zoom(int key, t_fdf *data)
 {
 	if ((key == 61 || key == 65451) && data->zoom < 70)
-		data->zoom += 1;
+	{
+		if (data->zoom + 1 == 0)
+			data->zoom = 1;
+		else
+			data->zoom += 1;
+	}
 	else if ((key == 45 || key == 65453) && data->zoom > -70)
-		data->zoom -= 1;
+	{
+		if (data->zoom - 1 == 0)
+			data->zoom = -1;
+		else
+			data->zoom -= 1;
+	}
 }
 
 void	change_projection(int key, t_fdf *dt)

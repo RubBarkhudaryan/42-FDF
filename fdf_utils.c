@@ -66,6 +66,6 @@ void	throw_error(int error_status)
 	else if (error_status == 1)
 		perror("Failed to open the file. - exit status 1");
 	else if (error_status == 2)
-		perror("Wrong arguments count. - exit status 2");
+		perror("Wrong arguments. - exit status 2");
 	exit(EXIT_FAILURE);
 }

@@ -58,7 +58,7 @@ t_fdf	*parse_map(char *file_path)
 	fd = open(file_path, O_RDONLY);
 	data = malloc_fdf();
 	if (!data || fd < 0)
-		throw_error(1);
+		return (throw_error(1), free(data), NULL);
 	data->rows = file_length(file_path);
 	data->matrix = (int **)ft_calloc(data->rows, sizeof(int *));
 	if (!data->matrix)
