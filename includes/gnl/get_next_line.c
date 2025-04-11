@@ -85,5 +85,10 @@ char	*get_next_line(int fd, char **ln)
 		return (NULL);
 	parse_buff(&line, &tmp);
 	*ln = line;
+	if (tmp && ft_strlen(tmp) == 0)
+	{
+		free(tmp);
+		tmp = NULL;
+	}
 	return (line);
 }

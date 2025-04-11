@@ -66,6 +66,12 @@ void	throw_error(int error_status)
 	else if (error_status == 1)
 		perror("Failed to open the file. - exit status 1");
 	else if (error_status == 2)
+	{
 		perror("Wrong arguments. - exit status 2");
+		perror("Make sure that the given file's permissons are ok,\
+ extension is *.fdf and the file exists in destination");
+	}
+	else if (error_status == 3)
+		perror("Ivalid map given - exit status 3");
 	exit(EXIT_FAILURE);
 }

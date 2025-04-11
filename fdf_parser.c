@@ -21,7 +21,24 @@ static t_fdf	*malloc_fdf(void)
 		return (NULL);
 	data->z_min = 2147483647;
 	data->z_max = -2147483648;
+	data->cols = 0;
 	return (data);
+}
+
+static void	check_cols(t_fdf *data, t_line *ln, int ind, int *fd)
+{
+	if (data->cols == 0)
+		data->cols = row_len(ln->split);
+	else if (data->cols > 0 && data->cols != row_len(ln->split))
+	{
+		get_next_line(-1, NULL);
+		free(ln->str);
+		free_split(&ln->split);
+		free_matrix(&data->matrix, ind);
+		close(*fd);
+		free(data);
+		throw_error(3);
+	}
 }
 
 static void	fill_row(int **row, char **split, int *max, int *min)
@@ -69,7 +86,7 @@ t_fdf	*parse_map(char *file_path)
 		if (!ln.str)
 			return (free_matrix(&data->matrix, i), NULL);
 		ln.split = ft_split(ln.str, ' ');
-		data->cols = row_len(ln.split);
+		check_cols(data, &ln, i, &fd);
 		fill_row(&data->matrix[i++], ln.split, &data->z_max, &data->z_min);
 		free(ln.str);
 		free_split(&ln.split);
