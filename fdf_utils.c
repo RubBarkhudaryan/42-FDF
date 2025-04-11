@@ -68,8 +68,10 @@ void	throw_error(int error_status)
 	else if (error_status == 2)
 	{
 		perror("Wrong arguments. - exit status 2");
-		perror("Make sure that the given file's permissons are ok,\
- extension is *.fdf and the file exists in destination");
+		perror("Make sure that:\n1. The given file's permissons are ok,\n\
+2. Extension is *.fdf and the file exists in the given destination,\n\
+3. Also check that the program will take 2 arguments: program\
+ name and the map file destination");
 	}
 	else if (error_status == 3)
 		perror("Ivalid map given - exit status 3");
