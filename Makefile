@@ -44,6 +44,8 @@ clean :
 	$(RM) $(OBJS)
 
 fclean : clean
+	rm -rf ./includes/gnl/gnl.a
+	rm -rf ./includes/libft/libft.a
 	$(RM) $(NAME) $(ARCHIVE)
 
 re: fclean all
